@@ -1,0 +1,39 @@
+name: Label Sync
+
+# .github/labels.json 이 main에 머지되면 레포의 라벨을 그 파일과 똑같이 맞춥니다.
+# 수동으로 돌리고 싶으면 Actions 탭 → Label Sync → Run workflow.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/labels.json"
+      - ".github/workflows/label-sync.yml"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "실제로 적용하지 않고 변경 내역만 확인"
+        type: boolean
+        default: false
+
+# 라벨은 Issues API에 속하므로 issues: write 권한이 필요합니다.
+permissions:
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync labels
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx --yes github-label-sync@3 \
+            --labels .github/labels.json \
+            ${{ inputs.dry-run && '--dry-run' || '' }} \
+            "${{ github.repository }}"
