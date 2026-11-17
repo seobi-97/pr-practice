@@ -7,7 +7,12 @@ function greet(name) {
   return `Hello, ${name}!`;
 }
 
+function greet2(name) {
+  return `Hello, ${name}!`;
+}
+
 const target = process.argv[2] ?? "world";
 console.log(greet(target));
+console.log(greet2(target));
 
-module.exports = { greet };
+module.exports = { greet , greet2};
