@@ -15,9 +15,13 @@ function greet3(name) {
   return `Hello, ${name}!`;
 }
 
+function greet4(name) {
+  return greet(name)+" "+greet2(name);
+}
+
 const target = process.argv[2] ?? "world";
 console.log(greet(target));
 console.log(greet2(target));
 console.log(greet3(target));
 
-module.exports = { greet , greet2};
+module.exports = { greet , greet2, greet3, greet4};
