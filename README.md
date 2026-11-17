@@ -12,6 +12,10 @@ pr-practice/
 ├── docs/pr-guide.md                 PR 올리는 전체 순서 치트시트
 └── .github/
     ├── pull_request_template.md     PR 본문 템플릿 (300자 기준)
+    ├── ISSUE_TEMPLATE/
+    │   ├── feature.md               기능 추가 이슈 템플릿
+    │   ├── bug.md                   버그 리포트 이슈 템플릿
+    │   └── config.yml               빈 이슈 허용 여부
     ├── labels.json                  이슈/PR 라벨 정의 (github-label-sync)
     └── workflows/label-sync.yml     라벨 자동 동기화
 ```
@@ -42,6 +46,32 @@ node hello.js
 | `fix/` | 버그 수정 |
 | `docs/` | 문서만 수정 |
 | `refactor/` | 동작 변화 없는 구조 개선 |
+
+## 이슈 템플릿
+
+`New issue`를 누르면 아래 두 가지 중에서 고르게 됩니다.
+
+| 템플릿 | 제목 접두사 | 자동 라벨 |
+| --- | --- | --- |
+| 기능 추가 | `[Feature] ` | `✨ Feature` |
+| 버그 리포트 | `[BugFix] ` | `🐞 BugFix` |
+
+템플릿을 추가하려면 [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/)에 `.md` 파일을 하나 더 만들면 됩니다.
+상단 frontmatter의 `labels` 값은 [labels.json](.github/labels.json)에 있는 이름과 **정확히 일치**해야 자동으로 달립니다.
+
+```markdown
+---
+name: 목록에 표시될 이름
+about: 목록에 표시될 설명
+title: '[Prefix] '
+labels: '✨ Feature'
+assignees: ''
+
+---
+```
+
+> 폴더 이름은 반드시 대문자 `ISSUE_TEMPLATE`이어야 GitHub이 인식합니다.
+> 템플릿 없이 빈 이슈도 열고 싶으면 [config.yml](.github/ISSUE_TEMPLATE/config.yml)의 `blank_issues_enabled`를 `true`로 바꾸세요.
 
 ## 라벨 관리
 
